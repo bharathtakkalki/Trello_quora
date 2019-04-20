@@ -5,6 +5,7 @@ import com.upgrad.quora.service.dao.QuestionDao;
 import com.upgrad.quora.service.dao.UserAuthDao;
 import com.upgrad.quora.service.entity.QuestionEntity;
 import com.upgrad.quora.service.entity.UserAuthEntity;
+import com.upgrad.quora.service.entity.UsersEntity;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,16 @@ public class QuestionBusinessService {
 
         //Returning the list of questionEntities.
         List<QuestionEntity> questionEntities = questionDao.getAllQuestions();
+        return questionEntities;
+    }
+
+
+    public List<QuestionEntity> getAllQuestionsByUser(final String uuid){
+
+        UsersEntity usersEntity = userAuthDao.getUser(uuid);
+
+        //Returning the list of questionEntities.
+        List<QuestionEntity> questionEntities = questionDao.getAllQuestionsByUser(usersEntity);
         return questionEntities;
     }
 

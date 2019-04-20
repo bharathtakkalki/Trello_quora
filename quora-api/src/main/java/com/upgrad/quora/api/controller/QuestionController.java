@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +35,24 @@ public class QuestionController {
     public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
 
         List<QuestionEntity> questionEntities = questionBusinessService.getAllQuestions(authorization);
+
+        List<QuestionDetailsResponse> questionDetailsResponseList = new LinkedList<>();//list is created to return.
+
+        //This loop iterates through the list and the question uuid and content to the questionDetailResponse.
+        //This is later added to the questionDetailsResponseList to return to the client.
+        for(QuestionEntity questionEntity:questionEntities){
+            QuestionDetailsResponse questionDetailsResponse = new QuestionDetailsResponse().id(questionEntity.getUuid()).content(questionEntity.getContent());
+            questionDetailsResponseList.add(questionDetailsResponse);
+        }
+
+        return new ResponseEntity<List<QuestionDetailsResponse>>(questionDetailsResponseList, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET,path = "question/all/{userId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestionsByUser(@PathVariable(value = "userId")final String uuid){
+
+        List<QuestionEntity> questionEntities = questionBusinessService.getAllQuestionsByUser(uuid);
 
         List<QuestionDetailsResponse> questionDetailsResponseList = new LinkedList<>();//list is created to return.
 

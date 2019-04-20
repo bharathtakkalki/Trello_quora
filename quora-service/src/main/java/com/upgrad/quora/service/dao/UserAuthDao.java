@@ -1,6 +1,7 @@
 package com.upgrad.quora.service.dao;
 
 import com.upgrad.quora.service.entity.UserAuthEntity;
+import com.upgrad.quora.service.entity.UsersEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,6 +28,13 @@ public class UserAuthDao {
         }catch(NoResultException nre){
             return null;
         }
+    }
+
+    public UsersEntity getUser(final String uuid) {
+
+            UsersEntity user = entityManager.createNamedQuery("userByUuid", UsersEntity.class).setParameter("uuid", uuid).getSingleResult();
+            return user;
+
     }
 
 }
