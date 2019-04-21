@@ -5,6 +5,7 @@ import com.upgrad.quora.api.model.QuestionDetailsResponse;
 import com.upgrad.quora.service.business.QuestionBusinessService;
 import com.upgrad.quora.service.entity.QuestionEntity;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
+import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,10 +50,14 @@ public class QuestionController {
 
     }
 
+    //This method is used to get all the question posted by the user it uses uuid to get user details and then get user question.
+    // There is only requirement that the user has to be signed in user with valid accesstoken.
+    // This method returns a List of questionDetailsResponse as there would be no of questions stored in the database.
+    //All the exception arising and as required has been handled.
     @RequestMapping(method = RequestMethod.GET,path = "question/all/{userId}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestionsByUser(@PathVariable(value = "userId")final String uuid){
+    public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestionsByUser(@PathVariable(value = "userId")final String uuid,@RequestHeader(value = "authorization")final String authorization) throws UserNotFoundException, AuthorizationFailedException {
 
-        List<QuestionEntity> questionEntities = questionBusinessService.getAllQuestionsByUser(uuid);
+        List<QuestionEntity> questionEntities = questionBusinessService.getAllQuestionsByUser(uuid,authorization);
 
         List<QuestionDetailsResponse> questionDetailsResponseList = new LinkedList<>();//list is created to return.
 

@@ -29,12 +29,4 @@ public class UserAuthDao {
             return null;
         }
     }
-
-    public UsersEntity getUser(final String uuid) {
-
-            UsersEntity user = entityManager.createNamedQuery("userByUuid", UsersEntity.class).setParameter("uuid", uuid).getSingleResult();
-            return user;
-
-    }
-
 }
