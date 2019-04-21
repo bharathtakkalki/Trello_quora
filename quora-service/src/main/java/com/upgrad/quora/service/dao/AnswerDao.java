@@ -16,6 +16,8 @@ public class AnswerDao {
     private EntityManager entityManager;
 
 
+    //This Method gets all the answer stores for a particular Question using question as the parameter.
+    //Returns a list of answer.
     public List<AnswerEntity> getAllAnswerToQuestion(QuestionEntity questionEntity){
         List<AnswerEntity> answerEntities = entityManager.createNamedQuery("getAllAnswerToQuestion",AnswerEntity.class).setParameter("question",questionEntity).getResultList();
         return answerEntities;
