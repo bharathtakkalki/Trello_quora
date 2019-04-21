@@ -10,14 +10,11 @@ import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "user_auth")
-@NamedQueries({
-        @NamedQuery(name = "userAuthTokenByAccessToken",query = "select ut from UserAuthEntity ut where ut.accessToken = :accessToken")
-})
+@Table(name = "user_auth", schema = "quora")
 public class UserAuthEntity {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -26,23 +23,23 @@ public class UserAuthEntity {
     private String uuid;
 
     @ManyToOne()
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "USER_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UsersEntity user;
 
-    @Column(name = "access_token")
+    @Column(name = "ACCESS_TOKEN")
     @Size(max = 500)
     @NotNull
     private String accessToken;
 
-    @Column(name = "expires_at")
+    @Column(name = "EXPIRES_AT")
     @NotNull
     private ZonedDateTime expiresAt;
 
-    @Column(name = "logout_at")
+    @Column(name = "LOGOUT_AT")
     private ZonedDateTime logoutAt;
 
-    @Column(name = "login_at")
+    @Column(name = "LOGIN_AT")
     @NotNull
     private ZonedDateTime loginAt;
 
