@@ -6,16 +6,11 @@ import org.apache.commons.lang3.builder.ToStringExclude;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "users", uniqueConstraints ={@UniqueConstraint(columnNames = {"userName","email"})})
+@Table(name = "users", schema = "quora", uniqueConstraints ={@UniqueConstraint(columnNames = {"userName","email"})})
 
-@NamedQueries(
-                {@NamedQuery(name = "userByUuid", query = "select u from UsersEntity u where u.uuid = :uuid")}
-
-                 )
-public class UsersEntity implements Serializable {
+public class UsersEntity {
 
     @Id
     @Column(name = "id")
@@ -27,17 +22,17 @@ public class UsersEntity implements Serializable {
     @NotNull
     private String uuid;
 
-    @Column(name = "firstname")
+    @Column(name = "firstName")
     @Size(max = 30)
     @NotNull
     private String firstName;
 
-    @Column(name = "lastname")
+    @Column(name = "lastName")
     @Size(max = 30)
     @NotNull
     private String lastName;
 
-    @Column(name = "username")
+    @Column(name = "userName")
     @Size(max = 30)
     @NotNull
     private String userName;
@@ -63,7 +58,7 @@ public class UsersEntity implements Serializable {
     @Size(max = 30)
     private String country;
 
-    @Column(name = "aboutme")
+    @Column(name = "aboutMe")
     @Size(max = 50)
     private String aboutMe;
 
@@ -75,7 +70,7 @@ public class UsersEntity implements Serializable {
     @Size(max = 30)
     private String role;
 
-    @Column(name = "contactnumber")
+    @Column(name = "contactNumber")
     @Size(max = 30)
     private String contactNumber;
 
