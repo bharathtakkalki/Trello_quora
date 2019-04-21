@@ -14,9 +14,12 @@ public class QuestionDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public QuestionEntity getQuestionByQuestionUuid(String questionUuid) {
+        QuestionEntity questionEntity = entityManager.createNamedQuery("getQuestionByQuestionUuid",QuestionEntity.class).setParameter("questionUuid",questionUuid).getSingleResult();
+        return questionEntity;
+    }
+
     public List<QuestionEntity> getAllQuestions(){
-
-
         List<QuestionEntity> questionEntities = entityManager.createNamedQuery("getAllQuestions",QuestionEntity.class).getResultList();
         return questionEntities;
     }
